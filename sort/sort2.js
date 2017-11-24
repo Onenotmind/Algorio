@@ -95,7 +95,7 @@ function merge(left,right){
 	}
 }
 
-  function merge(arr,l,m,r){  
+  function merge(arr,l,m,r){
 	 // var m=(l+r)/2;
      //  var left_size= m-l;
      //  var right_size=r-m+1;

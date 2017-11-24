@@ -58,9 +58,70 @@ function tree_grad (arr) { // arr为数组，储存着树节点依次数值
 	}
 }
 
+function tree_contruct (arr) { // arr为数组，储存着树节点依次数值
+  if (arr.length < 1) return
+  if (arr.length === 1) {
+    let rootNode = new node(arr[0])
+    return
+  } else {
+    let level = Math.floor(Math.log(arr.length)/Math.log(2)) + 1
+    let rootNode = new node(arr[0])
+    let nodeArr = []
+    let tmpArr = []
+    nodeArr.push(rootNode)
+    for (let i = 1; i < level; i++) {
+      let nodeIndex = 0
+      let m = Math.pow(2,i - 1)
+      let l = Math.pow(2,i)
+      if (i === level -1) {
+        l = arr.length
+      }
+      while (nodeIndex <= nodeArr.length) {
+        if (arr[m]) {
+          nodeArr[nodeIndex].left = new node(arr[m])
+          tmpArr.push(nodeArr[nodeIndex].left)
+          m++
+          if (m > l) break
+        }else { break}
+        if (arr[m]) {
+          nodeArr[nodeIndex].right = new node(arr[m])
+          tmpArr.push(nodeArr[nodeIndex].right)
+          m++
+          if (m > l) break
+        }else { break}
+        nodeIndex++
+      }
+      nodeArr = tmpArr
+      tmpArr = []
+    }
+    console.log(JSON.stringify(rootNode))
+  }
+}
 
+let arr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+tree_contruct(arr)
 
+/** c++ 实现树的层次遍历
+void PrintNodeByLevel(Node* root) {
+     vector<Node*> vec; // 这里我们使用STL 中的vector来代替数组，可利用到其动态扩展的属性
+     vec.push_back(root);
+     int cur = 0;
+     int last = 1;
+     while(cur < vec.size()) {
+          Last = vec.size(); // 新的一行访问开始，重新定位last于当前行最后一个节点的下一个位置
+          while(cur < last) {
+               cout << vec[cur] -> data << " "; // 访问节点
+               if(vec[cur] -> lChild) // 当前访问节点的左节点不为空则压入
+                   vec.push_back(vec[cur] -> lChild);
+               if(vec[cur] -> rChild) // 当前访问节点的右节点不为空则压入，注意左右节点的访问顺序不能颠倒
+                   vec.push_back(vec[cur] -> rChild);
+               cur++;
+          }
+          cout << endl; // 当cur == last时,说明该层访问结束，输出换行符
+     }
+}
 
+**/
 
 // 给定数组生成一颗二叉排序树
 
@@ -81,9 +142,9 @@ function preOrder1(tree) {
 	var preListRec = []; //定义保存先序遍历结果的数组
     var preOrderRec = function(node) {
     if (node) {//判断二叉树是否为空
-        preListRec.push(node.value); //将结点的值存入数组中
-        preOrderRec(node.left); //递归遍历左子树
-        preOrderRec(node.right); //递归遍历右子树
+      preListRec.push(node.value); //将结点的值存入数组中
+      preOrderRec(node.left); //递归遍历左子树
+      preOrderRec(node.right); //递归遍历右子树
     }
 }
 preOrderRec(tree);
@@ -123,6 +184,20 @@ function level(tree) {
 
 
 
+// var obj = {}
+
+// let rootNode = new node(0)
+// let baseNode = rootNode
+// baseNode.left = new node(1)
+// let nodeArr = []
+// nodeArr.push(rootNode.left)
+// createChildNode(nodeArr[0])
+
+// console.log(rootNode)
+
+// function createChildNode (childNode) {
+//   childNode.left = new node(6)
+// }
 
 
 
@@ -130,33 +205,31 @@ function level(tree) {
 
 
 
+// fiona
 
+// var root = {
+// val: 1,
+// left: {
 
+// val: 2,
+// left: {
+//   val: 4,
+// },
+// right:{
+//   val:5
+// }
+// },
+// right: {
 
-
-var root = {
-val: 1,
-left: {
-
-val: 2,
-left: {
-  val: 4,
-},
-right:{
-  val:5
-}
-},
-right: {
-
-val: 3,
-left: {
-  val: 6
-},
-right: {
-  val: 7
-}
-}
-}
+// val: 3,
+// left: {
+//   val: 6
+// },
+// right: {
+//   val: 7
+// }
+// }
+// }
 
 //1是递归，23是非递归
 
